@@ -2,8 +2,9 @@
 <html>
   <head>
     <link rel="stylesheet" href="styles.css">
-    <!-- <link rel="stylesheet" href="styles.css"> -->
     <script defer src="index.js"></script>
+    <script defer src="appliance.js"></script>
+    <script defer src="schedule.js"></script>
     <title>Simulator</title>
     <style>
  
@@ -15,11 +16,26 @@
     <h1>Time of Use Rates</h1>
     <ul>
         <li><a href="http://localhost:3000/appliances/">All Appliances</a></li>
-        <li><a href="#news">News</a></li>
+        <li><a href="#news">Create Appliance</a></li>
         <li><a href="#contact">Contact</a></li>
         <li><a href="#about">About</a></li>
-      </ul>
+    </ul>
+
+    <form>
+        <label for="fname">Appliance Name:</label><br>
+        <input type="text" id="fname" name="fname"><br>
+        <label for="lname">Appliance Wattage:</label><br>
+        <input type="text" id="lname" name="lname">
+        <input id=create-appliance type="submit" value="Submit">
+    </form>
       
+    <div hidden id="appliance-container">
+        some text here
+    </div>
+
+    <div id="appliance-container">
+        some text here
+    </div>
 
 
 <!-- <ul class="appliances">

@@ -1,5 +1,6 @@
 class Appliance{
-    constructor(name, status, url_on, url_off, created_at, updated_at){
+    constructor(id, name, status, url_on, url_off, created_at, updated_at){
+    this.id = id;
     this.name = name;
     this.status = status;
     this.url_on = url_on;

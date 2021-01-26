@@ -1,5 +1,6 @@
 class Schedule{
-    constructor(appliance_id, day, time_on, time_off, set_point, created_at, updated_at){
+    constructor(id, appliance_id, day, time_on, time_off, set_point, created_at, updated_at){
+    this.id = id;
     this.appliance_id = appliance_id;
     this.day = day;
     this.time_on = time_on;

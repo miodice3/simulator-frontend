@@ -14,33 +14,28 @@
 
   <body>
     <h1>Time of Use Rates</h1>
+
     <ul>
-        <li><a href="http://localhost:3000/appliances/">All Appliances</a></li>
+        <li><a id="allapps" href="">All Appliances</a></li>
         <li><a href="#news">Create Appliance</a></li>
         <li><a href="#contact">Contact</a></li>
         <li><a href="#about">About</a></li>
     </ul>
 
-    <form>
-        <label for="fname">Appliance Name:</label><br>
-        <input type="text" id="fname" name="fname"><br>
-        <label for="lname">Appliance Wattage:</label><br>
-        <input type="text" id="lname" name="lname">
-        <input id=create-appliance type="submit" value="Submit">
-    </form>
+    <div>
+        <form>
+            <label for="aname">Appliance Name:</label><br>
+            <input type="text" id="aname" name="aname"><br>
+            <label for="awattage">Appliance Wattage:</label><br>
+            <input type="text" id="awattage" name="awattage">
+            <input id=create-appliance type="submit" value="Submit">
+        </form>
+    </div>
       
-    <div hidden id="appliance-container">
-        some text here
-    </div>
 
-    <div id="appliance-container">
-        some text here
-    </div>
+        <ul id="appliance-container">
 
-
-<!-- <ul class="appliances">
-    
-</ul> -->
+        </ul>
 
 
   </body>

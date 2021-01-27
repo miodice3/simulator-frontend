@@ -65,9 +65,7 @@ function addSchedule(e){
             .then(function(){
                 fetchAppliances()
             })
-            
     }
-
 }
 
 createAppliance.addEventListener("click", addAppliance)
@@ -166,4 +164,9 @@ function fetchAppliances(){
             `
         })
     })
+}
+
+function costCalc(){
+    // return Rates.testMethod()
+    // return Rates.calculated(wattage, hour)
 }

@@ -1,12 +1,8 @@
 class Appliance{
-    constructor(id, name, status, url_on, url_off, created_at, updated_at){
+    constructor(id, name, wattage){
     this.id = id;
     this.name = name;
-    this.status = status;
-    this.url_on = url_on;
-    this.url_off = url_off;
-    this.created_at = created_at;
-    this.updated_at = updated_at
+    this.wattage = wattage
     }
 
     test(){

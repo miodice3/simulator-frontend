@@ -1,5 +1,5 @@
 let applianceContainer = document.getElementById("appliance-container")
-
+let applianceCreationContainer = document.getElementById("appliance-creation-container")
 
 let createAppliance = document.getElementById("create-appliance")
 
@@ -13,6 +13,20 @@ function listAppliances(e){
     fetchAppliances()
 }
 
+let createApp = document.getElementById("createapp")
+createApp.addEventListener("click", unhideNewAppForm)
+
+function unhideNewAppForm(e){
+    e.preventDefault()
+    hideAll()
+    applianceCreationContainer.hidden = ""
+}
+
+function hideAll(){
+    applianceCreationContainer.hidden = "hidden"
+    applianceContainer.hidden = "hidden"
+}
+
 function removeAllChildNodes(parent) {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
@@ -22,6 +36,7 @@ function removeAllChildNodes(parent) {
 let appliance
 function addAppliance(e){
     e.preventDefault()
+    
     let applianceName = document.getElementById("aname").value
     let applianceWattage = document.getElementById("awattage").value
 
@@ -38,13 +53,16 @@ function addAppliance(e){
         })
         .then(resp=> resp.json())
         .then(function(json){
-            appliance = new Appliance(json.id, json.name)
+            appliance = new Appliance(json.id, json.name, json.wattage)
             console.log(appliance)
         })
+        document.getElementById("aname").value = ""
+        document.getElementById("awattage").value = ""
 }
 
 function fetchAppliances(){
-    // applianceContainer.innerHTML = '';
+    hideAll()
+    applianceContainer.hidden = ""
     removeAllChildNodes(applianceContainer);
     fetch('http://localhost:3000/appliances')
     .then(function(obj){
@@ -52,21 +70,28 @@ function fetchAppliances(){
     })
     .then(function(appliancesArray){
         appliancesArray.forEach(function(appliance){
-            let divCard = document.createElement('div')
-            divCard.setAttribute('id', `appliance-${appliance.id}`)
-            divCard.setAttribute('data-id', `${appliance.id}`)
-            let ul = document.createElement('ul')
-            let li = document.createElement('li')
-            let name = document.createElement('p')
-            // let wattage = document.createElement('p')
-            name.innerText = appliance.name
-            // wattage.innerText = appliance.wattage
-            divCard.appendChild(name)
-            // divCard.appendChild(name, wattage) 
-            applianceContainer.appendChild(divCard)
+            applianceContainer.innerHTML += `
+            <div id=appliance-${appliance.id}>
+            <p>${appliance.name} - ${appliance.wattage}</p>
+            <ul>
+                ${appliance.schedules.map(function(schedule){return `<li>${schedule.day}</li>`}).join('')}
+            </ul>
+            </div>
+            `
         })
     })
 }
+
+
+
+
+
+
+
+
+
+
+
 
 // function fetchAppliances(){
 //     fetch('http://localhost:3000/appliances')

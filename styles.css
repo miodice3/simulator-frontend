@@ -4,6 +4,7 @@ ul {
     padding: 0;
     overflow: hidden;
     background-color: #333;
+    color:gray;
     }
 
     li {
@@ -24,6 +25,7 @@ background-color: #111;
 
 #appliance-container{
     background-color: white;
+
 }
 .formatted{
 

@@ -5,20 +5,16 @@ let createAppliance = document.getElementById("create-appliance")
 let createSchedule = document.getElementById("appliance-container")
 
 applianceContainer.addEventListener("click", addSchedule)
-// let submitSchedule = document.getElementById("create-schedule")
-// submitSchedule.addEventListener("click", addSchedule)
 
 function addSchedule(e){
     e.preventDefault()
     if (e.target.id === "create-schedule") {
         let example = e.target.dataset.id
-        let ex2 = document.querySelector(`#form-${example}`).hidden = ""
+        document.querySelector(`#form-${example}`).hidden = ""
     }
 
     if (e.target.id === "add-schedule"){
         let temp = "form-" + e.target.dataset.id
-        // debugger
-        
 
         fetch("http://localhost:3000/schedules", {
             method: "POST",
@@ -35,6 +31,43 @@ function addSchedule(e){
             })
             fetchAppliances()
     }
+
+    if (e.target.id === "delete-schedule") {
+        console.log("you tried to remove schedule instance: ", e.target.dataset.id)
+        fetch(`http://localhost:3000/schedules/${e.target.dataset.id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                id: e.target.dataset.id,
+            })
+            })
+            .then(function(){
+                fetchAppliances()
+            })
+            
+    }
+
+    if (e.target.id === "delete-appliance") {
+        console.log("you tried to remove schedule instance: ", e.target.dataset.id)
+        fetch(`http://localhost:3000/appliances/${e.target.dataset.id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                id: e.target.dataset.id,
+            })
+            })
+            .then(function(){
+                fetchAppliances()
+            })
+            
+    }
+
 }
 
 createAppliance.addEventListener("click", addAppliance)
@@ -106,11 +139,11 @@ function fetchAppliances(){
         appliancesArray.forEach(function(appliance){
             applianceContainer.innerHTML += `
             <div id=appliance-${appliance.id}>
-            <p>${appliance.name} - ${appliance.wattage}w</p>
+            <p>${appliance.name} - ${appliance.wattage}w - <a id="delete-appliance" data-id=${appliance.id} href="">Remove Appliance</a></p>
             <ul>
-                ${appliance.schedules.map(function(schedule){return `<li>${schedule.day} - on: ${schedule.time_on} off:  - ${schedule.time_off}</li>`}).join('')}
+                ${appliance.schedules.map(function(schedule){
+                    return `<li>${schedule.day} - on: ${schedule.time_on} off:  - ${schedule.time_off} - <a id="delete-schedule" data-id=${schedule.id} href="">Remove Schedule</a></li>`}).join('')}
             </ul>
-
 
             <input id=create-schedule data-id=${appliance.id} type="submit" value="create new schedule">
             <br>

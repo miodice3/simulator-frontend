@@ -176,11 +176,10 @@ function fetchAppliances(){
             `
         })
     })
-    // let cost = Rates.costCalcAsync()
     updateTotal()
 }
 
-function costCalc(){
-    // return Rates.testMethod()
-    // return Rates.calculated(wattage, hour)
-}
+// function costCalc(){
+//     // return Rates.testMethod()
+//     // return Rates.calculated(wattage, hour)
+// }

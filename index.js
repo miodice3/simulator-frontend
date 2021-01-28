@@ -12,9 +12,9 @@ applianceContainer.addEventListener("click", addSchedule)
 function updateTotal() {
     Rates.costCalcAsync()
     .then(function(sum) {
-        total.innerText = `Cost as Scheduled: $${sum["actual"].toFixed(2)}`
-        minTotal.innerText = `Cost as off peak: $${sum["min"].toFixed(2)}`
-        savingsTotal.innerText = `Cost as off peak: $${sum["savings"].toFixed(2)}`
+        total.innerText = `Cost as Scheduled: $${sum["actual"].toFixed(2)} / mo`
+        minTotal.innerText = `Cost if all off peak: $${sum["min"].toFixed(2)} / mo`
+        savingsTotal.innerText = `Possible Savings: $${sum["savings"].toFixed(2)} / mo`
     })
 }
 
@@ -45,7 +45,6 @@ function addSchedule(e){
     }
 
     if (e.target.id === "delete-schedule") {
-        console.log("you tried to remove schedule instance: ", e.target.dataset.id)
         fetch(`http://localhost:3000/schedules/${e.target.dataset.id}`, {
             method: "DELETE",
             headers: {
@@ -63,7 +62,6 @@ function addSchedule(e){
     }
 
     if (e.target.id === "delete-appliance") {
-        console.log("you tried to remove schedule instance: ", e.target.dataset.id)
         fetch(`http://localhost:3000/appliances/${e.target.dataset.id}`, {
             method: "DELETE",
             headers: {
@@ -90,6 +88,9 @@ allApps.addEventListener("click", listAppliances)
 function listAppliances(e){
     e.preventDefault()
     fetchAppliances()
+    total.hidden = ""
+    minTotal.hidden = ""
+    savingsTotal.hidden = ""
 }
 
 let createApp = document.getElementById("createapp")
@@ -104,6 +105,9 @@ function unhideNewAppForm(e){
 function hideAll(){
     applianceCreationContainer.hidden = "hidden"
     applianceContainer.hidden = "hidden"
+    total.hidden = "hidden"
+    minTotal.hidden = "hidden"
+    savingsTotal.hidden = "hidden"
 }
 
 function removeAllChildNodes(parent) {
@@ -133,7 +137,6 @@ function addAppliance(e){
         .then(resp=> resp.json())
         .then(function(json){
             appliance = new Appliance(json.id, json.name, json.wattage)
-            console.log(appliance)
         })
         document.getElementById("aname").value = ""
         document.getElementById("awattage").value = ""
@@ -155,7 +158,13 @@ function fetchAppliances(){
             <p>${appliance.name} - ${appliance.wattage}w - <a id="delete-appliance" data-id=${appliance.id} href="">Remove Appliance</a></p>
             <ul>
                 ${appliance.schedules.map(function(schedule){
-                    return `<li>${schedule.day} - on: ${schedule.time_on} off:  - ${schedule.time_off} - <a id="delete-schedule" data-id=${schedule.id} href="">Remove Schedule</a></li>`}).join('')}
+                    let savings;
+                    if (schedule.day = "Weekday") {
+                        let start = schedule.time_on.split(":")[0]
+                        let end = schedule.time_off.split(":")[0]
+                        savings = Rates.costDifferenceWeekday(start, end, appliance.wattage).savings.toFixed(2)
+                    }
+                    return `<li>${schedule.day} - on: ${schedule.time_on} off:  - ${schedule.time_off} -Savings: $${savings}- <a id="delete-schedule" data-id=${schedule.id} href="">Remove Schedule</a></li>`}).join('')}
             </ul>
 
             <input id=create-schedule data-id=${appliance.id} type="submit" value="create new schedule">

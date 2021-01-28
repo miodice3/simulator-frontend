@@ -21,14 +21,11 @@ class Rates {
     }
 
     static costCalcAsync(){
-
-
         let action = fetch('http://localhost:3000/appliances')
         .then(function(obj){
             return obj.json()
         })
         .then(function(appliancesArray){
-            // let sumTotal = 0.00;
             let sumHash = {actual: 0.00, min: 0.00}
             appliancesArray.forEach(function(appliance){
 
@@ -72,6 +69,39 @@ class Rates {
 
         })
         return action
+    }
+
+
+    static costDifferenceWeekday(on, off, wattage) {
+        let sumHash = {actual: 0.00, min: 0.00}
+
+        let i = 0
+                while (i < 24){
+                    if (i >= on && i <= off){
+                        sumHash["actual"] += (wattage/1000)*20*Rates.rateReturn(i)
+                        sumHash["min"] += (wattage/1000)*20*Rates.minReturn(i)
+                        }
+                    i += 1;
+                }
+
+        sumHash["savings"] = sumHash["actual"]-sumHash["min"]
+        return sumHash
+    }
+
+    static costDifferenceWeekend(on, off, wattage) {
+        let sumHash = {actual: 0.00, min: 0.00}
+
+        let i = 0
+                while (i < 24){
+                    if (i >= on && i <= off){
+                        sumHash["actual"] += (wattage/1000)*20*Rates.rateReturn(i)
+                        sumHash["min"] += (wattage/1000)*20*Rates.minReturn(i)
+                        }
+                    i += 1;
+                }
+
+        sumHash["savings"] = sumHash["actual"]-sumHash["min"]
+        return sumHash
     }
 
 }

@@ -2,23 +2,22 @@ class Rates {
 
     static rateReturn(hour){
         let rate;
-        switch (hour) {
-            case (x < 9):
-                rate = .08;
-                return rate
-            case (x < 14):
-                rate = .13;
-                return rate
-            case (x < 18):
-                rate = .18;
-                return rate
-            case (x < 21):
-                rate = .13;
-                return rate
-            case (x < 24);
-                rate = .08;
-                return rate
+        if (hour < 9){
+            rate = .08
+        } else if (hour < 14){
+            rate = .13
+        } else if (hour < 18){
+            rate = .18
+        } else if (hour < 21){
+            rate = .13
+        } else if (hour < 24){
+            rate = .08
         }
+        return rate
+    }
+
+    static minReturn(hour){
+        return .08
     }
 
     static costCalcAsync(){
@@ -29,8 +28,8 @@ class Rates {
             return obj.json()
         })
         .then(function(appliancesArray){
-            let sumTotal = 0.00;
-
+            // let sumTotal = 0.00;
+            let sumHash = {actual: 0.00, min: 0.00}
             appliancesArray.forEach(function(appliance){
 
                 appliance.schedules.forEach(function(schedule){
@@ -43,7 +42,9 @@ class Rates {
 
                                     while (i < 24){
                                         if (i >= start && i <= end){
-                                            sumTotal += (appliance.wattage/1000)*20*Rates.rateReturn(i).toFixed(2)
+                                            // sumTotal += (appliance.wattage/1000)*20*Rates.rateReturn(i)
+                                            sumHash["actual"] += (appliance.wattage/1000)*20*Rates.rateReturn(i)
+                                            sumHash["min"] += (appliance.wattage/1000)*20*Rates.minReturn(i)
                                             }
                                         i += 1;
                                     }
@@ -55,25 +56,22 @@ class Rates {
 
                                     while (i < 24){
                                         if (i >= start && i <= end){
-                                            sumTotal += (appliance.wattage/1000)*8*Rates.rateReturn(i).toFixed(2)
+                                            // sumTotal += (appliance.wattage/1000)*8*Rates.rateReturn(i)
+                                            sumHash["actual"] += (appliance.wattage/1000)*8*Rates.rateReturn(i)
+                                            sumHash["min"] += (appliance.wattage/1000)*20*Rates.minReturn(i)
                                             }
                                         i += 1;
                                     }
                             }
 
-
-
-
-
                 })
             })
-            return sumTotal
+            sumHash["savings"] = sumHash["actual"]-sumHash["min"]
+            return sumHash
+            // return sumTotal
 
         })
         return action
-        // console.log(action)
-        // console.log(sumTotal)
-        // return sumTotal.toFixed(2)
     }
 
 }

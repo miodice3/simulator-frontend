@@ -2,7 +2,8 @@ let applianceContainer = document.getElementById("appliance-container")
 let applianceCreationContainer = document.getElementById("appliance-creation-container")
 let createAppliance = document.getElementById("create-appliance")
 let total = document.getElementById("sum-total")
-
+let minTotal = document.getElementById("min-total")
+let savingsTotal = document.getElementById("savings-total")
 
 let createSchedule = document.getElementById("appliance-container")
 
@@ -11,7 +12,9 @@ applianceContainer.addEventListener("click", addSchedule)
 function updateTotal() {
     Rates.costCalcAsync()
     .then(function(sum) {
-        total.innerText = `$${sum.toFixed(2)}`
+        total.innerText = `Cost as Scheduled: $${sum["actual"].toFixed(2)}`
+        minTotal.innerText = `Cost as off peak: $${sum["min"].toFixed(2)}`
+        savingsTotal.innerText = `Cost as off peak: $${sum["savings"].toFixed(2)}`
     })
 }
 

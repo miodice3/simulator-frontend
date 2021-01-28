@@ -3,6 +3,7 @@ let applianceCreationContainer = document.getElementById("appliance-creation-con
 let createAppliance = document.getElementById("create-appliance")
 let total = document.getElementById("sum-total")
 
+
 let createSchedule = document.getElementById("appliance-container")
 
 applianceContainer.addEventListener("click", addSchedule)
@@ -74,6 +75,8 @@ function addSchedule(e){
                 fetchAppliances()
             })
     }
+
+
 }
 
 createAppliance.addEventListener("click", addAppliance)
@@ -141,6 +144,7 @@ function fetchAppliances(){
     .then(function(obj){
         return obj.json()
     })
+    //is this where Rates.costCalcAsync() should be integrated to to avoid dble calling API?
     .then(function(appliancesArray){
         appliancesArray.forEach(function(appliance){
             applianceContainer.innerHTML += `
@@ -172,6 +176,8 @@ function fetchAppliances(){
             `
         })
     })
+    // let cost = Rates.costCalcAsync()
+    updateTotal()
 }
 
 function costCalc(){

@@ -66,17 +66,38 @@ class Rates {
 
                 appliance.schedules.forEach(function(schedule){
                     
-                    let i = 0
-                    let start = schedule.time_on.split(":")[0]
-                    let end = schedule.time_off.split(":")[0]
+                    if (schedule.day == "Weekday"){
 
-                        while (i < 24){
-                            if (i >= start && i <= end){
-                                sumTotal += (appliance.wattage/1000)*1*Rates.rateReturn(i).toFixed(2)
-                                console.log("within loop", sumTotal)
-                                }
-                            i += 1;
-                        }
+                                let i = 0
+                                let start = schedule.time_on.split(":")[0]
+                                let end = schedule.time_off.split(":")[0]
+
+                                    while (i < 24){
+                                        if (i >= start && i <= end){
+                                            sumTotal += (appliance.wattage/1000)*20*Rates.rateReturn(i).toFixed(2)
+                                            console.log("within loop", sumTotal)
+                                            }
+                                        i += 1;
+                                    }
+                            } else if (schedule.day == "Weekend"){
+
+                                let i = 0
+                                let start = schedule.time_on.split(":")[0]
+                                let end = schedule.time_off.split(":")[0]
+
+                                    while (i < 24){
+                                        if (i >= start && i <= end){
+                                            sumTotal += (appliance.wattage/1000)*8*Rates.rateReturn(i).toFixed(2)
+                                            console.log("within loop", sumTotal)
+                                            }
+                                        i += 1;
+                                    }
+                            }
+
+
+
+
+
                 })
             })
             return sumTotal

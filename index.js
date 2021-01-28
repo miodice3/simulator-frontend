@@ -159,10 +159,12 @@ function fetchAppliances(){
             <ul>
                 ${appliance.schedules.map(function(schedule){
                     let savings;
-                    if (schedule.day = "Weekday") {
-                        let start = schedule.time_on.split(":")[0]
-                        let end = schedule.time_off.split(":")[0]
+                    let start = schedule.time_on.split(":")[0]
+                    let end = schedule.time_off.split(":")[0]
+                    if (schedule.day == "Weekday") {
                         savings = Rates.costDifferenceWeekday(start, end, appliance.wattage).savings.toFixed(2)
+                    } else if (schedule.day == "Weekend"){
+                        savings = Rates.costDifferenceWeekend(start, end, appliance.wattage).savings.toFixed(2)
                     }
                     return `<li>${schedule.day} - on: ${schedule.time_on} off:  - ${schedule.time_off} -Savings: $${savings}- <a id="delete-schedule" data-id=${schedule.id} href="">Remove Schedule</a></li>`}).join('')}
             </ul>

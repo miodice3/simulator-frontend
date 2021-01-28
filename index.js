@@ -1,10 +1,18 @@
 let applianceContainer = document.getElementById("appliance-container")
 let applianceCreationContainer = document.getElementById("appliance-creation-container")
 let createAppliance = document.getElementById("create-appliance")
+let total = document.getElementById("sum-total")
 
 let createSchedule = document.getElementById("appliance-container")
 
 applianceContainer.addEventListener("click", addSchedule)
+
+function updateTotal() {
+    Rates.costCalcAsync()
+    .then(function(sum) {
+        total.innerText = `$${sum.toFixed(2)}`
+    })
+}
 
 function addSchedule(e){
     e.preventDefault()

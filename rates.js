@@ -43,33 +43,49 @@ class Rates {
         }
     }
 
-    static wattageInPriceOut(number){
-        let cost = number*
-        console.log("you are within js class")
-    }
+    // static wattageInPriceOut(number){
+    //     let cost = number*
+    //     console.log("you are within js class")
+    // }
 
-    static definition(){
-        console.log("you are within js class")
-    }
+    // static definition(){
+    //     console.log("you are within js class")
+    // }
 
-    static costCalc(){
-        let scheduleInc = 0
-        let sumTotal = 0;
-        fetch('http://localhost:3000/appliances')
+    static costCalcAsync(){
+
+
+        let action = fetch('http://localhost:3000/appliances')
         .then(function(obj){
             return obj.json()
         })
         .then(function(appliancesArray){
+            let sumTotal = 0.00;
+
             appliancesArray.forEach(function(appliance){
-                console.log("you are iterating over appliance: ", appliance.name)
+
                 appliance.schedules.forEach(function(schedule){
-                    //do a while loop here and iterate over each of the hours to check if sched is on off, * wattage by return from case, add to variable
+                    
+                    let i = 0
                     let start = schedule.time_on.split(":")[0]
                     let end = schedule.time_off.split(":")[0]
-                    scheduleInc += 1;
+
+                        while (i < 24){
+                            if (i >= start && i <= end){
+                                sumTotal += (appliance.wattage/1000)*1*Rates.rateReturn(i).toFixed(2)
+                                console.log("within loop", sumTotal)
+                                }
+                            i += 1;
+                        }
                 })
             })
-        })
+            return sumTotal
 
+        })
+        return action
+        // console.log(action)
+        // console.log(sumTotal)
+        // return sumTotal.toFixed(2)
     }
+
 }

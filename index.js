@@ -77,6 +77,54 @@ function addSchedule(e){
             })
     }
 
+    if (e.target.className === 'slider-left') {
+
+        fetch(`http://localhost:3000/schedules/${e.target.dataset.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                id: e.target.dataset.id,
+                time_on: e.target.value,
+                left_right: e.target.className
+            })
+            })
+            .then(function(){
+                // fetchAppliances()
+                fetchAppliances()
+                total.hidden = ""
+                minTotal.hidden = ""
+                savingsTotal.hidden = ""
+            })
+    
+        }
+
+
+        if (e.target.className === 'slider-right') {
+    
+            fetch(`http://localhost:3000/schedules/${e.target.dataset.id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    id: e.target.dataset.id,
+                    time_off: e.target.value,
+                    left_right: e.target.className
+                })
+                })
+                .then(function(){
+                    fetchAppliances()
+                    total.hidden = ""
+                    minTotal.hidden = ""
+                    savingsTotal.hidden = ""
+                })
+        
+            }
+
 
 }
 
@@ -150,7 +198,7 @@ function fetchAppliances(){
     .then(function(obj){
         return obj.json()
     })
-    //is this where Rates.costCalcAsync() should be integrated to to avoid dble calling API?
+
     .then(function(appliancesArray){
         appliancesArray.forEach(function(appliance){
             applianceContainer.innerHTML += `
@@ -166,7 +214,9 @@ function fetchAppliances(){
                     } else if (schedule.day == "Weekend"){
                         savings = Rates.costDifferenceWeekend(start, end, appliance.wattage).savings.toFixed(2)
                     }
-                    return `<li>${schedule.day} - on: ${schedule.time_on} off:  - ${schedule.time_off} -Savings: $${savings}- <a id="delete-schedule" data-id=${schedule.id} href="">Remove Schedule</a></li>`}).join('')}
+                    return `<li>${schedule.day} - on: ${schedule.time_on} off:  - ${schedule.time_off} -Savings: $${savings}  - <a id="delete-schedule" data-id=${schedule.id} href="">delete schedule</a></li>
+                    <li><input data-id=${schedule.id} class="slider-left" type="range" id="input-left-${schedule.id}" min="0" max="23" value="${start}">
+                    <input data-id=${schedule.id} class="slider-right" type="range" id="input-right" min="0" max="23" value="${end}"></li>`}).join('')}
             </ul>
 
             <input id=create-schedule data-id=${appliance.id} type="submit" value="create new schedule">
@@ -192,8 +242,3 @@ function fetchAppliances(){
     })
     updateTotal()
 }
-
-// function costCalc(){
-//     // return Rates.testMethod()
-//     // return Rates.calculated(wattage, hour)
-// }

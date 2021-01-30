@@ -200,6 +200,7 @@ function fetchAppliances(){
     })
 
     .then(function(appliancesArray){
+        // console.log(appliancesArray)
         appliancesArray.forEach(function(appliance){
             applianceContainer.innerHTML += `
             <div id=appliance-${appliance.id}>
@@ -216,7 +217,8 @@ function fetchAppliances(){
                     }
                     return `<li>${schedule.day} - on: ${schedule.time_on} off:  - ${schedule.time_off} -Savings: $${savings}  - <a id="delete-schedule" data-id=${schedule.id} href="">delete schedule</a></li>
                     <li><input data-id=${schedule.id} class="slider-left" type="range" id="input-left-${schedule.id}" min="0" max="23" value="${start}">
-                    <input data-id=${schedule.id} class="slider-right" type="range" id="input-right" min="0" max="23" value="${end}"></li>`}).join('')}
+                    <input data-id=${schedule.id} class="slider-right" type="range" id="input-right" min="0" max="23" value="${end}">
+                    </li>`}).join('')}
             </ul>
 
             <input id=create-schedule data-id=${appliance.id} type="submit" value="create new schedule">

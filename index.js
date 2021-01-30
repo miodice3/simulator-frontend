@@ -217,7 +217,7 @@ function fetchAppliances(){
                     }
                     return `<li>${schedule.day} - on: ${schedule.time_on} off:  - ${schedule.time_off} -Savings: $${savings}  - <a id="delete-schedule" data-id=${schedule.id} href="">delete schedule</a></li>
                     <li><input data-id=${schedule.id} class="slider-left" type="range" id="input-left-${schedule.id}" min="0" max="23" value="${start}">
-                    <input data-id=${schedule.id} class="slider-right" type="range" id="input-right" min="0" max="23" value="${end}">
+                    <input data-id=${schedule.id} class="slider-right" type="range" id="input-right" min="0" max="23" value="${end}">some text
                     </li>`}).join('')}
             </ul>
 

@@ -119,7 +119,16 @@ input[type=range]::-webkit-slider-thumb {
 
 /* 
 FROM HERE DOWN IS MOD CODE PEN FORMATTING */
-/* 
+/* body {
+	margin: 0;
+	padding: 0;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #e5e5e5;
+} */
+
 .middle {
 	position: relative;
 	width: 50%;
@@ -170,6 +179,12 @@ FROM HERE DOWN IS MOD CODE PEN FORMATTING */
 	right: 25%;
 	transform: translate(15px, -10px);
 }
+.slider > .thumb.hover {
+	box-shadow: 0 0 0 20px rgba(98,0,238,.1);
+}
+.slider > .thumb.active {
+	box-shadow: 0 0 0 40px rgba(98,0,238,.2);
+}
 
 input[type=range] {
 	position: absolute;
@@ -188,4 +203,4 @@ input[type=range]::-webkit-slider-thumb {
 	border: 0 none;
 	background-color: red;
 	-webkit-appearance: none;
-} */
+}

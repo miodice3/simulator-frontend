@@ -77,54 +77,62 @@ function addSchedule(e){
             })
     }
 
-    if (e.target.className === 'slider-left') {
+    // if (e.target.className === 'slider-left') {
 
-        fetch(`http://localhost:3000/schedules/${e.target.dataset.id}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({
-                id: e.target.dataset.id,
-                time_on: e.target.value,
-                left_right: e.target.className
-            })
-            })
-            .then(function(){
-                // fetchAppliances()
-                fetchAppliances()
-                total.hidden = ""
-                minTotal.hidden = ""
-                savingsTotal.hidden = ""
-            })
+    //     fetch(`http://localhost:3000/schedules/${e.target.dataset.id}`, {
+    //         method: "PATCH",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             "Accept": "application/json"
+    //         },
+    //         body: JSON.stringify({
+    //             id: e.target.dataset.id,
+    //             time_on: e.target.value,
+    //             left_right: e.target.className
+    //         })
+    //         })
+    //         .then(function(){
+    //             // fetchAppliances()
+    //             fetchAppliances()
+    //             total.hidden = ""
+    //             minTotal.hidden = ""
+    //             savingsTotal.hidden = ""
+    //         })
     
-        }
+    //     }
 
 
-        if (e.target.className === 'slider-right') {
+    //     if (e.target.className === 'slider-right') {
     
-            fetch(`http://localhost:3000/schedules/${e.target.dataset.id}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({
-                    id: e.target.dataset.id,
-                    time_off: e.target.value,
-                    left_right: e.target.className
-                })
-                })
-                .then(function(){
-                    fetchAppliances()
-                    total.hidden = ""
-                    minTotal.hidden = ""
-                    savingsTotal.hidden = ""
-                })
+    //         fetch(`http://localhost:3000/schedules/${e.target.dataset.id}`, {
+    //             method: "PATCH",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 "Accept": "application/json"
+    //             },
+    //             body: JSON.stringify({
+    //                 id: e.target.dataset.id,
+    //                 time_off: e.target.value,
+    //                 left_right: e.target.className
+    //             })
+    //             })
+    //             .then(function(){
+    //                 fetchAppliances()
+    //                 total.hidden = ""
+    //                 minTotal.hidden = ""
+    //                 savingsTotal.hidden = ""
+    //             })
         
+    //         }
+
+          if (e.target.className === 'input-left') {
+            console.log("input-thumb")
             }
 
+          if (e.target.className === 'thumb left') {
+            console.log("thumb left")
+            console.log.(this)
+            }
 
 }
 
@@ -216,8 +224,22 @@ function fetchAppliances(){
                         savings = Rates.costDifferenceWeekend(start, end, appliance.wattage).savings.toFixed(2)
                     }
                     return `<li>${schedule.day} - on: ${schedule.time_on} off:  - ${schedule.time_off} -Savings: $${savings}  - <a id="delete-schedule" data-id=${schedule.id} href="">delete schedule</a></li>
-                    <li><input data-id=${schedule.id} class="slider-left" type="range" id="input-left-${schedule.id}" min="0" max="23" value="${start}">
-                    <input data-id=${schedule.id} class="slider-right" type="range" id="input-right" min="0" max="23" value="${end}">some text
+                    <li>
+                    <br><br>
+                    <div class="middle">
+                        <div class="multi-range-slider">
+                            <input data-id=${schedule.id} type="range" class="input-left" min="0" max="23" value="11">
+                            <input data-id=${schedule.id} type="range" class="input-right" min="0" max="23" value="14">
+
+                            <div class="slider">
+                                <div class="track"></div>
+                                <div class="range"></div>
+                                <div class="thumb left"></div>
+                                <div class="thumb right"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br>
                     </li>`}).join('')}
             </ul>
 

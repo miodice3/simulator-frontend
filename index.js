@@ -5,140 +5,55 @@ let total = document.getElementById("sum-total")
 let minTotal = document.getElementById("min-total")
 let savingsTotal = document.getElementById("savings-total")
 let savingsTotalAnnual = document.getElementById("savings-total-annual")
-
 let createSchedule = document.getElementById("appliance-container")
 
-applianceContainer.addEventListener("click", addSchedule)
+applianceContainer.addEventListener("click", generalListen)
+createAppliance.addEventListener("click", addAppliance)
+
+let allApps = document.getElementById("allapps")
+allApps.addEventListener("click", listAppliances)
+
+let createApp = document.getElementById("createapp")
+createApp.addEventListener("click", unhideNewAppForm)
 
 function updateTotal() {
     Rates.costCalcAsync()
-    .then(function(sum) {
-        total.innerText = `Cost as Scheduled: $${sum["actual"].toFixed(2)} / mo`
-        minTotal.innerText = `Cost if all off peak: $${sum["min"].toFixed(2)} / mo`
-        savingsTotal.innerText = `Possible Savings: $${sum["savings"].toFixed(2)} / mo`
-        savingsTotalAnnual.innerText = `Possible Savings: $${sum["savingsAnnual"].toFixed(2)} / year`
-    })
+        .then(function(sum) {
+            total.innerText = `Cost as Scheduled: $${sum["actual"].toFixed(2)} / mo`
+            minTotal.innerText = `Cost if all off peak: $${sum["min"].toFixed(2)} / mo`
+            savingsTotal.innerText = `Possible Savings: $${sum["savings"].toFixed(2)} / mo`
+            savingsTotalAnnual.innerText = `Possible Savings: $${sum["savingsAnnual"].toFixed(2)} / year`
+    }   )
 }
 
-function addSchedule(e){
+function generalListen(e){
     e.preventDefault()
+
     if (e.target.id === "create-schedule") {
         let example = e.target.dataset.id
         document.querySelector(`#form-${example}`).hidden = ""
     }
 
     if (e.target.id === "add-schedule"){
-        let temp = "form-" + e.target.dataset.id
-
-        fetch("http://localhost:3000/schedules", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({
-                appliance_id: e.target.dataset.id,
-                day: document.querySelector(`#${temp}`).day.value,
-                time_on: document.querySelector(`#${temp}`).timeon.value,
-                time_off: document.querySelector(`#${temp}`).timeoff.value,
-            })
-            })
-            .then(function(){
-                fetchAppliances()
-                total.hidden = ""
-                minTotal.hidden = ""
-                savingsTotal.hidden = ""
-            })
-
+        scheduleAdapter.addScheduleAdapter(e)
     }
 
     if (e.target.id === "delete-schedule") {
-        fetch(`http://localhost:3000/schedules/${e.target.dataset.id}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({
-                id: e.target.dataset.id,
-            })
-            })
-            .then(function(){
-                fetchAppliances()
-            })
-            
+        scheduleAdapter.deleteScheduleAdapter(e)
     }
 
     if (e.target.id === "delete-appliance") {
-        fetch(`http://localhost:3000/appliances/${e.target.dataset.id}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({
-                id: e.target.dataset.id,
-            })
-            })
-            .then(function(){
-                fetchAppliances()
-            })
+        applianceAdapter.deleteApplianceAdapter(e)
     }
 
     if (e.target.className === 'slider-left') {
-
-        fetch(`http://localhost:3000/schedules/${e.target.dataset.id}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({
-                id: e.target.dataset.id,
-                time_on: e.target.value,
-                left_right: e.target.className
-            })
-            })
-            .then(function(){
-                fetchAppliances()
-                total.hidden = ""
-                minTotal.hidden = ""
-                savingsTotal.hidden = ""
-            })
-    
+        scheduleAdapter.updateSliderLeftAdapter(e)    
         }
 
-
-        if (e.target.className === 'slider-right') {
-    
-            fetch(`http://localhost:3000/schedules/${e.target.dataset.id}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({
-                    id: e.target.dataset.id,
-                    time_off: e.target.value,
-                    left_right: e.target.className
-                })
-                })
-                .then(function(){
-                    fetchAppliances()
-                    total.hidden = ""
-                    minTotal.hidden = ""
-                    savingsTotal.hidden = ""
-                })
-        
-            }
-
-
+    if (e.target.className === 'slider-right') {
+        scheduleAdapter.updateSliderRightAdapter(e)
+        }
 }
-
-createAppliance.addEventListener("click", addAppliance)
-
-let allApps = document.getElementById("allapps")
-allApps.addEventListener("click", listAppliances)
 
 function listAppliances(e){
     e.preventDefault()
@@ -147,9 +62,6 @@ function listAppliances(e){
     minTotal.hidden = ""
     savingsTotal.hidden = ""
 }
-
-let createApp = document.getElementById("createapp")
-createApp.addEventListener("click", unhideNewAppForm)
 
 function unhideNewAppForm(e){
     e.preventDefault()
@@ -171,92 +83,15 @@ function removeAllChildNodes(parent) {
     }
 }
 
-let appliance
 function addAppliance(e){
     e.preventDefault()
-    
-    let applianceName = document.getElementById("aname").value
-    let applianceWattage = document.getElementById("awattage").value
-
-        fetch("http://localhost:3000/appliances", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        body: JSON.stringify({
-            name: applianceName,
-            wattage: applianceWattage
-        })
-        })
-        .then(resp=> resp.json())
-        .then(function(json){
-            appliance = new Appliance(json.id, json.name, json.wattage)
-        })
-        document.getElementById("aname").value = ""
-        document.getElementById("awattage").value = ""
+    applianceAdapter.addApplianceAdapter(e)
 }
 
 function fetchAppliances(){
     hideAll()
     applianceContainer.hidden = ""
     removeAllChildNodes(applianceContainer);
-    fetch('http://localhost:3000/appliances')
-    .then(function(obj){
-        return obj.json()
-    })
-
-    .then(function(appliancesArray){
-
-        appliancesArray.forEach(function(appliance){
-
-            appliance.schedules.sort(function(a, b){
-                return a.id - b.id;
-            })
-            applianceContainer.innerHTML += `
-            <div id=appliance-${appliance.id}>
-            <p>${appliance.name} - ${appliance.wattage}w - <a id="delete-appliance" data-id=${appliance.id} href="">Remove Appliance</a></p>
-            <ul>
-                ${
-                    appliance.schedules
-                        .map(function(schedule){
-                            let savings = 0;
-                            let start = schedule.time_on.split(":")[0]
-                            let end = schedule.time_off.split(":")[0]
-                            if (schedule.day == "Weekday") {
-                                savings = Rates.costDifferenceWeekday(start, end, appliance.wattage).savings.toFixed(2)
-                            } else if (schedule.day == "Weekend"){
-                                savings = Rates.costDifferenceWeekend(start, end, appliance.wattage).savings.toFixed(2)
-                            }
-                            return `<li>${schedule.day} - on: ${schedule.time_on} off:  - ${schedule.time_off} -Savings: $${savings}  - <a id="delete-schedule" data-id=${schedule.id} href="">delete schedule</a></li>
-                        <li><input data-id=${schedule.id} class="slider-left" type="range" id="input-left-${schedule.id}" min="0" max="23" value="${start}">
-                        <input data-id=${schedule.id} class="slider-right" type="range" id="input-right-${schedule.id}" min="0" max="23" value="${end}">
-                        </li>`
-                        })
-                        .join('')
-                }
-            </ul>
-
-            <input id=create-schedule data-id=${appliance.id} type="submit" value="create new schedule">
-            <br>
-
-            <form hidden id=form-${appliance.id}>
-                <label for="day">Select Type:</label>
-                <input type="hidden" id="appliance_id" name="appliance_id" value="${appliance.id}">
-                <select name="day" id="day">
-                <option value="Weekday">Weekday</option>
-                <option value="Weekend">Weekend</option>
-                </select><br>
-                <label for="timeon">Time On (24hr format):</label><br>
-                <input type="text" id="timeon" name="timeon"><br>
-                <label for="timeoff">Time Off (24hr format):</label><br>
-                <input type="text" id="timeoff" name="timeoff"><br>
-                <input id=add-schedule data-id=${appliance.id} type="submit" value="Submit">
-            </form>
-
-            </div>
-            `
-        })
-    })
+    applianceAdapter.fetchAppliancesAdapter();
     updateTotal()
 }

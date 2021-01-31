@@ -200,25 +200,33 @@ function fetchAppliances(){
     })
 
     .then(function(appliancesArray){
-        // console.log(appliancesArray)
+
         appliancesArray.forEach(function(appliance){
+            appliance.schedules.sort(function(a, b){
+                return a.id - b.id;
+            })
             applianceContainer.innerHTML += `
             <div id=appliance-${appliance.id}>
             <p>${appliance.name} - ${appliance.wattage}w - <a id="delete-appliance" data-id=${appliance.id} href="">Remove Appliance</a></p>
             <ul>
-                ${appliance.schedules.map(function(schedule){
-                    let savings;
-                    let start = schedule.time_on.split(":")[0]
-                    let end = schedule.time_off.split(":")[0]
-                    if (schedule.day == "Weekday") {
-                        savings = Rates.costDifferenceWeekday(start, end, appliance.wattage).savings.toFixed(2)
-                    } else if (schedule.day == "Weekend"){
-                        savings = Rates.costDifferenceWeekend(start, end, appliance.wattage).savings.toFixed(2)
-                    }
-                    return `<li>${schedule.day} - on: ${schedule.time_on} off:  - ${schedule.time_off} -Savings: $${savings}  - <a id="delete-schedule" data-id=${schedule.id} href="">delete schedule</a></li>
-                    <li><input data-id=${schedule.id} class="slider-left" type="range" id="input-left-${schedule.id}" min="0" max="23" value="${start}">
-                    <input data-id=${schedule.id} class="slider-right" type="range" id="input-right" min="0" max="23" value="${end}">
-                    </li>`}).join('')}
+                ${
+                    appliance.schedules
+                        .map(function(schedule){
+                            let savings;
+                            let start = schedule.time_on.split(":")[0]
+                            let end = schedule.time_off.split(":")[0]
+                            if (schedule.day == "Weekday") {
+                                savings = Rates.costDifferenceWeekday(start, end, appliance.wattage).savings.toFixed(2)
+                            } else if (schedule.day == "Weekend"){
+                                savings = Rates.costDifferenceWeekend(start, end, appliance.wattage).savings.toFixed(2)
+                            }
+                            return `<li>${schedule.day} - on: ${schedule.time_on} off:  - ${schedule.time_off} -Savings: $${savings}  - <a id="delete-schedule" data-id=${schedule.id} href="">delete schedule</a></li>
+                        <li><input data-id=${schedule.id} class="slider-left" type="range" id="input-left-${schedule.id}" min="0" max="23" value="${start}">
+                        <input data-id=${schedule.id} class="slider-right" type="range" id="input-right-${schedule.id}" min="0" max="23" value="${end}">
+                        </li>`
+                        })
+                        .join('')
+                }
             </ul>
 
             <input id=create-schedule data-id=${appliance.id} type="submit" value="create new schedule">

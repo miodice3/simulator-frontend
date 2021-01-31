@@ -39,7 +39,6 @@ class Rates {
 
                                     while (i < 24){
                                         if (i >= start && i <= end){
-                                            // sumTotal += (appliance.wattage/1000)*20*Rates.rateReturn(i)
                                             sumHash["actual"] += (appliance.wattage/1000)*20*Rates.rateReturn(i)
                                             sumHash["min"] += (appliance.wattage/1000)*20*Rates.minReturn(i)
                                             }
@@ -53,9 +52,8 @@ class Rates {
 
                                     while (i < 24){
                                         if (i >= start && i <= end){
-                                            // sumTotal += (appliance.wattage/1000)*8*Rates.rateReturn(i)
                                             sumHash["actual"] += (appliance.wattage/1000)*8*Rates.rateReturn(i)
-                                            sumHash["min"] += (appliance.wattage/1000)*20*Rates.minReturn(i)
+                                            sumHash["min"] += (appliance.wattage/1000)*8*Rates.minReturn(i)
                                             }
                                         i += 1;
                                     }
@@ -63,7 +61,7 @@ class Rates {
 
                 })
             })
-            sumHash["savings"] = sumHash["actual"]-sumHash["min"]
+            sumHash["savings"] = (sumHash["actual"]-sumHash["min"])
             return sumHash
             // return sumTotal
 
@@ -94,8 +92,8 @@ class Rates {
         let i = 0
                 while (i < 24){
                     if (i >= on && i <= off){
-                        sumHash["actual"] += (wattage/1000)*20*Rates.rateReturn(i)
-                        sumHash["min"] += (wattage/1000)*20*Rates.minReturn(i)
+                        sumHash["actual"] += (wattage/1000)*8*Rates.rateReturn(i)
+                        sumHash["min"] += (wattage/1000)*8*Rates.minReturn(i)
                         }
                     i += 1;
                 }

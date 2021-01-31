@@ -41,7 +41,10 @@ function addSchedule(e){
                 time_off: document.querySelector(`#${temp}`).timeoff.value,
             })
             })
-            fetchAppliances()
+            .then(function(){
+                fetchAppliances()
+            })
+
     }
 
     if (e.target.id === "delete-schedule") {
@@ -212,7 +215,7 @@ function fetchAppliances(){
                 ${
                     appliance.schedules
                         .map(function(schedule){
-                            let savings;
+                            let savings = 0;
                             let start = schedule.time_on.split(":")[0]
                             let end = schedule.time_off.split(":")[0]
                             if (schedule.day == "Weekday") {

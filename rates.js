@@ -62,6 +62,7 @@ class Rates {
                 })
             })
             sumHash["savings"] = (sumHash["actual"]-sumHash["min"])
+            sumHash["savingsAnnual"] = sumHash["savings"]*12
             return sumHash
             // return sumTotal
 

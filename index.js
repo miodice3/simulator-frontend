@@ -4,6 +4,7 @@ let createAppliance = document.getElementById("create-appliance")
 let total = document.getElementById("sum-total")
 let minTotal = document.getElementById("min-total")
 let savingsTotal = document.getElementById("savings-total")
+let savingsTotalAnnual = document.getElementById("savings-total-annual")
 
 let createSchedule = document.getElementById("appliance-container")
 
@@ -15,6 +16,7 @@ function updateTotal() {
         total.innerText = `Cost as Scheduled: $${sum["actual"].toFixed(2)} / mo`
         minTotal.innerText = `Cost if all off peak: $${sum["min"].toFixed(2)} / mo`
         savingsTotal.innerText = `Possible Savings: $${sum["savings"].toFixed(2)} / mo`
+        savingsTotalAnnual.innerText = `Possible Savings: $${sum["savingsAnnual"].toFixed(2)} / year`
     })
 }
 
@@ -43,6 +45,9 @@ function addSchedule(e){
             })
             .then(function(){
                 fetchAppliances()
+                total.hidden = ""
+                minTotal.hidden = ""
+                savingsTotal.hidden = ""
             })
 
     }
@@ -95,7 +100,6 @@ function addSchedule(e){
             })
             })
             .then(function(){
-                // fetchAppliances()
                 fetchAppliances()
                 total.hidden = ""
                 minTotal.hidden = ""
@@ -205,6 +209,7 @@ function fetchAppliances(){
     .then(function(appliancesArray){
 
         appliancesArray.forEach(function(appliance){
+
             appliance.schedules.sort(function(a, b){
                 return a.id - b.id;
             })

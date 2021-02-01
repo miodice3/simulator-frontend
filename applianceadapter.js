@@ -1,21 +1,5 @@
 class applianceAdapter{
 
-    static deleteApplianceAdapter(e){
-        fetch(`http://localhost:3000/appliances/${e.target.dataset.id}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({
-                id: e.target.dataset.id,
-            })
-            })
-            .then(function(){
-                fetchAppliances()
-            })
-    }
-
     static addApplianceAdapter(e){
         let appliance
         
@@ -33,11 +17,9 @@ class applianceAdapter{
             wattage: applianceWattage
         })
         })
-        .then(resp=> resp.json())
-        .then(function(json){
-            appliance = new Appliance(json.id, json.name, json.wattage)
-        })
-        document.getElementById("aname").value = ""
+
+        //clear form inputs
+        document.getElementById("aname").value = "" 
         document.getElementById("awattage").value = ""
     }
 
@@ -49,14 +31,14 @@ class applianceAdapter{
         })
     
         .then(function(appliancesArray){
-    
+
             appliancesArray.forEach(function(appliance){
     
                 appliance.schedules.sort(function(a, b){
                     return a.id - b.id;
                 })
                 applianceContainer.innerHTML += `
-                <div id=appliance-${appliance.id}>
+                <div class="appliance" id=appliance-${appliance.id}>
                 <p>${appliance.name} - ${appliance.wattage}w - <a id="delete-appliance" data-id=${appliance.id} href="">Remove Appliance</a></p>
                 <ul>
                     ${
@@ -70,7 +52,7 @@ class applianceAdapter{
                                 } else if (schedule.day == "Weekend"){
                                     savings = Rates.costDifferenceWeekend(start, end, appliance.wattage).savings.toFixed(2)
                                 }
-                                return `<li>${schedule.day} - on: ${schedule.time_on} off:  - ${schedule.time_off} -Savings: $${savings}  - <a id="delete-schedule" data-id=${schedule.id} href="">delete schedule</a></li>
+                                return `<li class="slider">${schedule.day} - on: ${schedule.time_on} off:  - ${schedule.time_off} -Savings: $${savings}  - <a id="delete-schedule" data-id=${schedule.id} href="">delete schedule</a></li>
                             <li><input data-id=${schedule.id} class="slider-left" type="range" id="input-left-${schedule.id}" min="0" max="23" value="${start}">
                             <input data-id=${schedule.id} class="slider-right" type="range" id="input-right-${schedule.id}" min="0" max="23" value="${end}">
                             </li>`
@@ -101,6 +83,22 @@ class applianceAdapter{
             })
         })
 
+    }
+
+    static deleteApplianceAdapter(e){
+        fetch(`http://localhost:3000/appliances/${e.target.dataset.id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                id: e.target.dataset.id,
+            })
+            })
+            .then(function(){
+                fetchAppliances()
+            })
     }
 
 }

@@ -1,191 +1,75 @@
-/* ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+
+.logotext {
+	color:#2E8B57;
+	font-family: 'Permanent Marker', cursive;
+	font-size: 60px;
+	text-align: center;
+}
+
+.slider {
+	font-style:italic;
+}
+
+.appliance {
+	background-color: #ECECEC;
+    border-radius: 5px;
+    width: 500px;
+    margin: auto;
+
+}
+
+.italic {
+	text-align: center;
+	font-style:italic;
+	padding: 20px;
+}
+
+.navbar {
     overflow: hidden;
-    background-color: #333;
-    color:gray;
-    }
-
-    li {
+    background-color: #565554;
+}
+.dropdown {
     float: left;
-    }
+    overflow: hidden;
+}
 
-    li a {
-    display: block;
+.dropdown .dropbtn {
+    font-size: 20px;
+    border: none;
+    outline: none;
     color: white;
-    text-align: center;
     padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+
+.navbar a:hover,
+.dropdown:hover .dropbtn {
+    background-color: #F24236;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 8px 8px 16px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
     text-decoration: none;
-    }
-
-    li a:hover {
-background-color: #111;
+    display: block;
+    text-align: left;
 }
 
-#appliance-container{
-    background-color: white;
-
-}
-.formatted{
-
-} */
-/* 
-body {
-	margin: 0;
-	padding: 0;
-	height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: #e5e5e5;
+.dropdown-content a:hover {
+    background-color: #ddd;
 }
 
-.middle {
-	position: relative;
-	width: 50%;
-	max-width: 500px;
+.dropdown:hover .dropdown-content {
+    display: block;
 }
-
-.slider {
-	position: relative;
-	z-index: 1;
-	height: 10px;
-	margin: 0 15px;
-}
-.slider > .track {
-	position: absolute;
-	z-index: 1;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-	border-radius: 5px;
-	background-color: #c6aee7;
-}
-.slider > .range {
-	position: absolute;
-	z-index: 2;
-	left: 25%;
-	right: 25%;
-	top: 0;
-	bottom: 0;
-	border-radius: 5px;
-	background-color: #6200ee;
-}
-.slider > .thumb {
-	position: absolute;
-	z-index: 3;
-	width: 30px;
-	height: 30px;
-	background-color: #6200ee;
-	border-radius: 50%;
-	box-shadow: 0 0 0 0 rgba(98,0,238,.1);
-	transition: box-shadow .3s ease-in-out;
-}
-.slider > .thumb.left {
-	left: 25%;
-	transform: translate(-15px, -10px);
-}
-.slider > .thumb.right {
-	right: 25%;
-	transform: translate(15px, -10px);
-}
-.slider > .thumb.hover {
-	box-shadow: 0 0 0 20px rgba(98,0,238,.1);
-}
-.slider > .thumb.active {
-	box-shadow: 0 0 0 40px rgba(98,0,238,.2);
-}
-
-input[type=range] {
-	position: absolute;
-	pointer-events: none;
-	-webkit-appearance: none;
-	z-index: 2;
-	height: 10px;
-	width: 100%;
-	opacity: 0;
-}
-input[type=range]::-webkit-slider-thumb {
-	pointer-events: all;
-	width: 30px;
-	height: 30px;
-	border-radius: 0;
-	border: 0 none;
-	background-color: red;
-	-webkit-appearance: none;
-} */
-
-/* 
-FROM HERE DOWN IS MOD CODE PEN FORMATTING */
-/* 
-.middle {
-	position: relative;
-	width: 50%;
-	max-width: 500px;
-}
-
-.slider {
-	position: relative;
-	z-index: 1;
-	height: 10px;
-	margin: 0 15px;
-}
-.slider > .track {
-	position: absolute;
-	z-index: 1;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-	border-radius: 5px;
-	background-color: #c6aee7;
-}
-.slider > .range {
-	position: absolute;
-	z-index: 2;
-	left: 25%;
-	right: 25%;
-	top: 0;
-	bottom: 0;
-	border-radius: 5px;
-	background-color: #6200ee;
-}
-.slider > .thumb {
-	position: absolute;
-	z-index: 3;
-	width: 30px;
-	height: 30px;
-	background-color: #6200ee;
-	border-radius: 50%;
-	box-shadow: 0 0 0 0 rgba(98,0,238,.1);
-	transition: box-shadow .3s ease-in-out;
-}
-.slider > .thumb.left {
-	left: 25%;
-	transform: translate(-15px, -10px);
-}
-.slider > .thumb.right {
-	right: 25%;
-	transform: translate(15px, -10px);
-}
-
-input[type=range] {
-	position: absolute;
-	pointer-events: none;
-	-webkit-appearance: none;
-	z-index: 2;
-	height: 10px;
-	width: 100%;
-	opacity: 0;
-}
-input[type=range]::-webkit-slider-thumb {
-	pointer-events: all;
-	width: 30px;
-	height: 30px;
-	border-radius: 0;
-	border: 0 none;
-	background-color: red;
-	-webkit-appearance: none;
-} */

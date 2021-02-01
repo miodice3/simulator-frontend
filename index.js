@@ -61,6 +61,7 @@ function listAppliances(e){
     total.hidden = ""
     minTotal.hidden = ""
     savingsTotal.hidden = ""
+    savingsTotalAnnual.hidden = ""
 }
 
 function unhideNewAppForm(e){
@@ -75,6 +76,7 @@ function hideAll(){
     total.hidden = "hidden"
     minTotal.hidden = "hidden"
     savingsTotal.hidden = "hidden"
+    savingsTotalAnnual.hidden = "hidden"
 }
 
 function removeAllChildNodes(parent) {

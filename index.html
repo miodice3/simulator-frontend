@@ -8,6 +8,7 @@
     <script defer src="schedule.js"></script>
     <script defer src="scheduleadapter.js"></script>
     <script defer src="rates.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
     <title>Simulator</title>
     <style>
  
@@ -16,17 +17,27 @@
   </head>
 
   <body>
-    <h1>Time of Use Rates</h1>
+    <div class="logotext">save money with your appliances!!</div>
 
-    <ul>
-        <li><a id="allapps" href="">All Appliances</a></li>
-        <li><a id="createapp" href="">Create Appliance</a></li>
-        <li><a href="https://www.xcelenergy.com/staticfiles/xe-responsive/Programs%20and%20Rebates/Residential/Solar-Res-Plans-TOU-FAQ.pdf" target="_blank">Excel Energy Time of Use Chart</a></li>
-    </ul>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Select Option 
+
+        </button>
+        <div class="dropdown-content">
+            <a id="allapps" href="">All Appliances</a>
+            <a id="createapp" href="">Create Appliance</a>
+            <a href="https://www.xcelenergy.com/staticfiles/xe-responsive/Programs%20and%20Rebates/Residential/Solar-Res-Plans-TOU-FAQ.pdf" target="_blank">Excel Energy Time of Use Chart</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="italic">
     <div id="sum-total"></div>
     <div id="min-total"></div>
     <div id="savings-total"></div>
     <div id="savings-total-annual"></div>
+  </div>
 
     <div hidden id="appliance-creation-container">
         <form>

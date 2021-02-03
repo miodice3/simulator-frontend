@@ -27,6 +27,8 @@
         <div class="dropdown-content">
             <a id="allapps" href="">All Appliances</a>
             <a id="createapp" href="">Create Appliance</a>
+            <a id="getallwattages" href="">Total Wattages</a>
+            <a id="search" href="">Search</a>
             <a href="https://www.xcelenergy.com/staticfiles/xe-responsive/Programs%20and%20Rebates/Residential/Solar-Res-Plans-TOU-FAQ.pdf" target="_blank">Excel Energy Time of Use Chart</a>
         </div>
       </div>
@@ -48,10 +50,22 @@
             <input id=create-appliance type="submit" value="Submit">
         </form>
     </div>
-
     
     <ul hidden id="appliance-container">
-    </ul>    
+    </ul>
+
+    <div hidden id="total-wattage">
+    </div>
+
+    <div hidden id="search-box">
+      <form>
+        <label for="searchName">Appliance Name:</label><br>
+        <input type="text" id="searchName" name="searchName"><br>
+        <input id=search-appliance type="submit" value="Submit">
+    </form>
+    </div>
+
+    <div id="found-appliance"></div>
 
   </body>
 </html>

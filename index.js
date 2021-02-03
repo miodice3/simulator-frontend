@@ -16,6 +16,37 @@ allApps.addEventListener("click", listAppliances)
 let createApp = document.getElementById("createapp")
 createApp.addEventListener("click", unhideNewAppForm)
 
+let getWattages = document.getElementById("getallwattages")
+getWattages.addEventListener("click", wattagesHandler)
+let sumWattages = document.getElementById("total-wattage")
+
+let searchElement = document.getElementById("search")
+searchElement.addEventListener("click", searchHandler)
+let searchBox = document.getElementById("search-box")
+
+let searchSubmitButton = document.getElementById("search-appliance")
+searchSubmitButton.addEventListener("click", searchSubmitHandler)
+
+let foundAppliance = document.getElementById("found-appliance")
+
+function searchHandler(e){
+    e.preventDefault()
+    searchBox.hidden = ""
+}
+
+function searchSubmitHandler(e){
+    e.preventDefault()
+    applianceAdapter.searchAppliances(e)
+}
+
+
+function wattagesHandler(e){
+    e.preventDefault()
+    sumWattages.hidden = ""
+    applianceAdapter.totalWattages()
+}
+
+
 function updateTotal() {
     Rates.costCalcAsync()
         .then(function(sum) {
@@ -94,6 +125,7 @@ function fetchAppliances(){
     hideAll()
     applianceContainer.hidden = ""
     removeAllChildNodes(applianceContainer);
+    console.log("you are here")
     applianceAdapter.fetchAppliancesAdapter();
     updateTotal()
 }

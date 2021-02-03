@@ -23,15 +23,45 @@ class applianceAdapter{
         document.getElementById("awattage").value = ""
     }
 
-    static fetchAppliancesAdapter(){
-
+    static totalWattages(){
         fetch('http://localhost:3000/appliances')
         .then(function(obj){
             return obj.json()
         })
-    
         .then(function(appliancesArray){
+            sumWattages.innerHTML = appliancesArray.reduce(function(total, element){
+                return element.wattage + total}, 0)
+        })   
+    }
 
+    static searchAppliances(e){
+        let applianceName = document.getElementById("searchName").value
+        fetch('http://localhost:3000/appliances')
+        .then(function(obj){
+            return obj.json()
+        })
+        .then(function(appliancesArray){
+            console.log(appliancesArray)
+            if (appliancesArray.find(function(appliance){ return appliance.name === applianceName})){
+            foundAppliance.innerHTML = appliancesArray.find(function(appliance){ return appliance.name === applianceName}).name
+            } else {
+                foundAppliance.innerHTML = "no matches found"
+            }
+        })
+    }
+
+    static fetchAppliancesAdapter(){
+        // console.log("Inside Fetch Appliance Adapter")
+        fetch('http://localhost:3000/appliances')
+        .then(function(obj){
+            return obj.json()
+        })
+        .then(function(appliancesArray){
+            // console.log(appliancesArray)
+            let returnArray = appliancesArray.sort(function(a, b){
+                return b.wattage - a.wattage;
+            })
+            console.log(returnArray)
             appliancesArray.forEach(function(appliance){
     
                 appliance.schedules.sort(function(a, b){

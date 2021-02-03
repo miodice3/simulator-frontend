@@ -21,6 +21,7 @@ class scheduleAdapter{
                 total.hidden = ""
                 minTotal.hidden = ""
                 savingsTotal.hidden = ""
+                savingsTotalAnnual.hidden = ""
             })
     }
 
@@ -42,6 +43,7 @@ class scheduleAdapter{
                 total.hidden = ""
                 minTotal.hidden = ""
                 savingsTotal.hidden = ""
+                savingsTotalAnnual.hidden = ""
             })
     }
 
@@ -63,6 +65,7 @@ class scheduleAdapter{
                 total.hidden = ""
                 minTotal.hidden = ""
                 savingsTotal.hidden = ""
+                savingsTotalAnnual.hidden = ""
             })
     }
 
